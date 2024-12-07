@@ -19,4 +19,4 @@ Tailwind CSS: For a responsive and modern UI.
 Python Flask: To handle the server-side logic and API endpoints.
 OpenAI API: For generative AI-based features like diagnosis and documentation generation.
 _**Database**_
-SQLite/PostgreSQL: To store patient records and system logs.
+MySQL
