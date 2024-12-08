@@ -1,0 +1,14 @@
+Install Python 3.8
+
+Download Rust from here:
+https://rustup.rs/
+
+Download this file:
+torch-1.12.1+cpu-cp38-cp38-win_amd64.whl
+
+Run: 
+py -3.8 -m venv myenv 
+myenv\Scripts\activate
+pip install "C:\Users\abdul\Downloads\torch-1.12.1+cpu-cp38-cp38-win_amd64.whl"
+
+Only then after Install Libraries
