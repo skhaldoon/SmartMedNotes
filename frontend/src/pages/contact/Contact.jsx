@@ -102,7 +102,7 @@ const Contact = () => {
         </h2>
         <p className="text-base font-poopins pl-7 pr-7 ml-5 mr-5 text-[18px] sm:text-[28px]  leading-[20px] sm:leading-[40px] mt-2">
           Don’t hesitate to contact us. Please use the form below or email at{" "}
-          <span className="text-teal-400">info(at)mebiocon.com</span>
+          <span className="text-teal-400">info(at)smartmednotes.com</span>
           <br /> We are looking forward for your message.
         </p>
       </div>
@@ -113,7 +113,7 @@ const Contact = () => {
             <div className="email details">
               <i className="fas fa-envelope"></i>
               <div className="topic">Email</div>
-              <div className="text-one">info@mebiocon.com</div>
+              <div className="text-one">info@smartmednotes.com</div>
               {/* <div className="text-two">ij</div> */}
             </div>
           </div>

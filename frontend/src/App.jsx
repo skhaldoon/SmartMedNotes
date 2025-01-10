@@ -8,19 +8,26 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Contact from "./pages/contact/Contact";
 import Signup from "./pages/signup/Signup";
-import ChatInterface from "./pages/chatInterface/chatInterface";
 
+import Navbar from "./pages/navbar/Navbar";
+import Assistant from "./pages/assistant/Assistant";
+import About from "./pages/about/About";
+import Footer from "./pages/footer/Footer";
 function App() {
   return (
     <>
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/chatinterface" element={<ChatInterface />} />
+          <Route path="/assistant" element={<Assistant />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/footer" element={<Footer />} />
         </Routes>
+        <Footer/>
       </Router>
     </>
   );
