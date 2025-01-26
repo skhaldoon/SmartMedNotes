@@ -1,20 +1,30 @@
+import json
 from sentence_transformers import SentenceTransformer
 
-# Load the model
-model = SentenceTransformer('all-MiniLM-L6-v2')
+def generate_embeddings(data_path, model_name="sentence-transformers/all-MiniLM-L6-v2"):
+    """
+    Generate embeddings for the dataset using SentenceTransformer.
+    """
+    with open(data_path, 'r') as f:
+        data = json.load(f)
+    
+    model = SentenceTransformer(model_name)
+    embeddings = []
+    for item in data:
+        embedding = model.encode(item['content'], convert_to_tensor=True)
+        embeddings.append({"content": item['content'], "embedding": embedding.tolist()})
+    
+    return embeddings
 
-# Split the text into manageable chunks
-def split_text_into_chunks(text, max_length=500):
-    words = text.split()
-    return [" ".join(words[i:i + max_length]) for i in range(0, len(words), max_length)]
+def save_embeddings(embeddings, output_path):
+    """
+    Save embeddings to a JSON file.
+    """
+    with open(output_path, 'w') as f:
+        json.dump(embeddings, f, indent=4)
 
-# Embed the text
-def embed_text(text_chunks):
-    return model.encode(text_chunks)
-
-# Load combined text
-with open("combined_books.txt", "r", encoding="utf-8") as file:
-    combined_text = file.read()
-
-text_chunks = split_text_into_chunks(combined_text)
-embeddings = embed_text(text_chunks)
+if __name__ == "__main__":
+    json_file = '/content/MayoClinic.json'
+    embeddings = generate_embeddings(json_file)
+    save_embeddings(embeddings, json_file.replace('.json', '_embeddings.json'))
+s
