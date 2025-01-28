@@ -79,30 +79,30 @@ const Contact = () => {
       <div
         className={`${styles.flexCenter} relative mt-5 pt-10  sm:py-13 py-4  `}
       >
-        <img
+        {/* <img
         //   src={background1}
           alt="Image"
           className={`w-auto h-auto object-cover sm:py-9 py-2 `}
-        />
+        /> */}
         <div className="absolute inset-0 flex flex-col  justify-center  text-white">
           <h2
-            className={`text-[40px] pl-10 font-poppins leading-[24px] pt-30 mt-20   font-bold mb-4 ml-6 text-teal-600`}
+            className={`text-[40px] pl-10 font-poppins leading-[24px] pt-30 mt-20   font-bold mb-4 ml-6 text-gray-600`}
           >
             Contact Us
           </h2>
-          <p className="text-[18px] pl-10  ml-6 sm:block hidden">
+          {/* <p className="text-[18px] pl-10  ml-6 sm:block hidden">
             A leading provider of quality and regulatory affairs services
-          </p>
+          </p> */}
         </div>
       </div>
       {/* line added */}
       <div className="mt-6 text-center pb-9">
-        <h2 className="text-2xl font-poopins sm:text-4xl font-bold text-teal-600">
+        <h2 className="text-2xl font-poopins sm:text-4xl font-bold text-gray-600">
           Get In Touch
         </h2>
         <p className="text-base font-poopins pl-7 pr-7 ml-5 mr-5 text-[18px] sm:text-[28px]  leading-[20px] sm:leading-[40px] mt-2">
           Don’t hesitate to contact us. Please use the form below or email at{" "}
-          <span className="text-teal-400">info(at)smartmednotes.com</span>
+          <span className="text-gray-400">info(at)smartmednotes.com</span>
           <br /> We are looking forward for your message.
         </p>
       </div>

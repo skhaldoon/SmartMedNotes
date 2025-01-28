@@ -51,7 +51,7 @@
 
 .content .left-side .details i {
   font-size: 30px;
-  color: rgb(18, 145, 145);
+  color: rgb(48, 58, 58);
   margin-bottom: 10px;
 }
 
@@ -74,7 +74,7 @@
 .content .right-side .topic-text {
   font-size: 23px;
   font-weight: 600;
-  color: rgb(18, 145, 145);
+  color: rgb(62, 75, 75);
 }
 
 .right-side .input-box {
@@ -116,13 +116,13 @@
   border: none;
   padding: 8px 16px;
   border-radius: 6px;
-  background: rgb(18, 145, 145);
+  background: rgb(63, 70, 70);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .button input[type="button"]:hover {
-  background: rgb(18, 145, 145);
+  background: rgb(124, 129, 129);
 }
 
 @media (max-width: 950px) {

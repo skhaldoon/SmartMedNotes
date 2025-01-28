@@ -4,7 +4,7 @@ import logo from "../../assets/lock.svg"; // Replace with your logo
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-12">
+    <footer className="bg-gray-700 text-white py-12">
       <div className="max-w-7xl mx-auto px-6 sm:px-16 flex flex-col md:flex-row justify-between items-center">
         {/* Logo and Company Info */}
         <div className="flex flex-col items-center md:items-start mb-6 md:mb-0">
@@ -18,27 +18,27 @@ const Footer = () => {
         {/* Links Section */}
         <div className="flex flex-col md:flex-row md:space-x-12 mb-6 md:mb-0">
           <div className="flex flex-col mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold text-teal-400 mb-2">
+            <h3 className="text-lg font-semibold text-gray-400 mb-2">
               Quick Links
             </h3>
             <ul className="text-sm">
               <li>
-                <Link to="/home" className="hover:text-teal-500">
+                <Link to="/home" className="hover:text-gray-400">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:text-teal-500">
+                <Link to="/about" className="hover:text-gray-400">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/services" className="hover:text-teal-500">
+                <Link to="/services" className="hover:text-gray-400">
                   Services
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:text-teal-500">
+                <Link to="/contact" className="hover:text-gray-400">
                   Contact
                 </Link>
               </li>
@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-col mb-4 md:mb-0">
-            <h3 className="text-lg font-semibold text-teal-400 mb-2">
+            <h3 className="text-lg font-semibold text-gray-400 mb-2">
               Contact
             </h3>
             <ul className="text-sm">
