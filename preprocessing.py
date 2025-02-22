@@ -1,3 +1,4 @@
+#preprocessing and jsin formatting
 import re
 import json
 import os
@@ -51,13 +52,13 @@ def convert_to_json(cleaned_text, output_path):
     if cleaned_text is None:
         print(f"Skipping JSON conversion as text preprocessing failed.")
         return
-    
+
     # Split the text into paragraphs (use '. ' for sentence splitting)
     paragraphs = cleaned_text.split('. ')  # Split by sentences for structured JSON
-    
+
     # Structure each paragraph as a JSON object
     json_data = [{"id": i + 1, "content": para.strip()} for i, para in enumerate(paragraphs) if para.strip()]
-    
+
     # Save to JSON file
     try:
         with open(output_path, 'w', encoding='utf-8') as json_file:
@@ -73,15 +74,18 @@ if __name__ == "__main__":
         '/content/MayoClinic.txt',
         '/content/Osteoporosis-MayoClinic.txt',
         '/content/speakingTree-Jayant.txt',
-        '/content/MayoClinic.txt'
+        '/content/MayoClinic.txt',
+        '/content/orthopedics.txt',
+        '/content/info.txt'
+
     ]
-    
+
     for file_path in file_paths:
         # Preprocess the file
         processed = preprocess_text(file_path)
-        
+
         # Create output JSON path
         json_path = file_path.replace('.txt', '.json')
-        
+
         # Convert preprocessed text to JSON
         convert_to_json(processed, json_path)
