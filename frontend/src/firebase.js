@@ -1,18 +1,16 @@
-// src/firebase.js
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBkkxgGHFJ5wUJtzc4Tk3PC6r5_S3vGCVs",
-    authDomain: "smartmednotes-d5d1b.firebaseapp.com",
-    projectId: "smartmednotes-d5d1b",
-    storageBucket: "smartmednotes-d5d1b.appspot.com",
-    messagingSenderId: "814561248010",
-    appId: "1:814561248010:web:4a182cb13c33883093f0f3",
-    measurementId: "G-C3YK7Y57JL"
-  };
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+};
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
