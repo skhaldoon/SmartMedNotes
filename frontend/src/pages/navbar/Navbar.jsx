@@ -1,28 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../../firebase"; // Import Firebase authentication
 
 const Navbar = () => {
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      await auth.signOut();
-      setUser(null);
-      navigate("/"); // Redirect to home after logout
-    } catch (error) {
-      console.error("Logout Error:", error.message);
-    }
+  const handleLoginClick = () => {
+    navigate("/Login");
   };
-
+  const handleSignupClick = () => {
+    navigate("/Signup");
+  };
   return (
     <>
       {/* Navbar */}
@@ -47,29 +34,18 @@ const Navbar = () => {
         </div>
         {/* Buttons */}
         <div className="flex flex-wrap space-x-2 mt-2 md:mt-0">
-          {user ? (
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-3 py-2 text-sm md:text-base rounded hover:bg-red-500"
-            >
-              Logout
-            </button>
-          ) : (
-            <>
-              <button
-                onClick={() => navigate("/Signup")}
-                className="bg-gray-600 text-white px-3 py-2 text-sm md:text-base rounded hover:bg-gray-400"
-              >
-                Sign Up
-              </button>
-              <button
-                onClick={() => navigate("/Login")}
-                className="bg-gray-600 text-white px-3 py-2 text-sm md:text-base rounded hover:bg-gray-400"
-              >
-                Log In
-              </button>
-            </>
-          )}
+          <button
+            onClick={handleSignupClick}
+            className="bg-gray-600 text-white px-3 py-2 text-sm md:text-base rounded hover:bg-gray-400"
+          >
+            Sign Up
+          </button>
+          <button
+            onClick={handleLoginClick}
+            className="bg-gray-600 text-white px-3 py-2 text-sm md:text-base rounded hover:bg-gray-400"
+          >
+            Log In
+          </button>
         </div>
       </nav>
     </>

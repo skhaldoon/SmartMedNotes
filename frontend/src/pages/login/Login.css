@@ -95,29 +95,21 @@ a {
   text-align: center;
 }
 .input_box {
-  display: flex;
-  align-items: center;
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  margin-bottom: 15px; /* Adds spacing between input fields */
+  position: relative;
+  margin-top: 30px;
+  width: 100%;
+  height: 40px;
 }
-
 .input_box input {
-  flex: 1;
+  height: 100%;
+  width: 100%;
   border: none;
   outline: none;
-  font-size: 16px;
+  padding: 0 30px;
+  color: #333;
+  transition: all 0.2s ease;
+  border-bottom: 1.5px solid #aaaaaa;
 }
-
-
-.toggle_password {
-  cursor: pointer;
-  font-size: 20px;
-  margin-left: 10px;
-}
-
-
 .input_box input:focus {
   border-color: #4caf50;
 }
@@ -144,14 +136,12 @@ a {
 .option_field {
   margin-top: 14px;
   display: flex;
-  flex-direction: column; /* Makes items stack vertically */
-  align-items: flex-start; /* Aligns items to the left */
-  gap: 5px; /* Adds spacing between them */
+  align-items: center;
+  justify-content: space-between;
 }
 .form_container a {
-  color: red; /* Makes the text red */
+  color: #4caf50;
   font-size: 12px;
-  cursor: pointer;
 }
 .form_container a:hover {
   text-decoration: underline;
@@ -160,16 +150,6 @@ a {
   display: flex;
   column-gap: 8px;
   white-space: nowrap;
-}
-
-.forgot_password {
-  color: red; /* Makes the text red */
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.forgot_password:hover {
-  text-decoration: underline;
 }
 .checkbox input {
   accent-color: #4caf50;
