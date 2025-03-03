@@ -17,6 +17,5 @@ Treatment Outcome Prediction
 Tailwind CSS: For a responsive and modern UI.
 **_Backend_**
 Python Flask: To handle the server-side logic and API endpoints.
-OpenAI API: For generative AI-based features like diagnosis and documentation generation.
 _**Database**_
-MySQL
+Firebase
