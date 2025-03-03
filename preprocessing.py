@@ -1,15 +1,11 @@
-#preprocessing and jsin formatting
 import re
 import json
 import os
+import pandas as pd
 
 def preprocess_text(file_path):
     """
-    Comprehensive preprocessing pipeline:
-    - Removes special characters (except basic punctuation for sentence structure)
-    - Handles page numbers, footnotes, and references
-    - Fixes broken lines/words
-    - Removes extra spaces
+    Comprehensive preprocessing pipeline for text files.
     """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
@@ -21,45 +17,36 @@ def preprocess_text(file_path):
         print(f"Error reading file {file_path}: {e}")
         return None
 
-    # Step 1: Remove special characters (but keep basic punctuation)
-    text = re.sub(r'[^A-Za-z0-9.,\s]', '', text)  # Keeps '.', ',' for sentence structure
+    # Remove special characters (keep basic punctuation)
+    text = re.sub(r'[^A-Za-z0-9.,\s]', '', text)
 
-    # Step 2: Remove standalone page numbers and footnotes
-    text = re.sub(r'\b\d+\b', '', text)  # Removes standalone numbers (e.g., page numbers)
-    text = re.sub(r'\d{1,4}[^A-Za-z0-9\s]', '', text)  # Removes numbers followed by special characters
+    # Remove standalone page numbers, footnotes, and references
+    text = re.sub(r'\b\d+\b', '', text)
+    text = re.sub(r'\d{1,4}[^A-Za-z0-9\s]', '', text)
+    text = re.sub(r'\[.*?\]', '', text)
+    text = re.sub(r'\b\d{4}[;:](.*?)\b(?:Medline|CrossRef|PubMed)\b.*', '', text)
+    text = re.sub(r'\b\w{2,}\d{1,2}\b.*', '', text)
 
-    # Step 3: Remove references and citations
-    text = re.sub(r'\[.*?\]', '', text)  # Removes inline references like [1], [2]
-    text = re.sub(r'\b\d{4}[;:](.*?)\b(?:Medline|CrossRef|PubMed)\b.*', '', text)  # Removes Medline citations
-    text = re.sub(r'\b\w{2,}\d{1,2}\b.*', '', text)  # Removes alphanumeric references (e.g., TSRH23)
-
-    # Step 4: Fix broken lines and words
-    text = re.sub(r'(\w)-\n(\w)', r'\1\2', text)  # Fix broken words split across lines
-    text = re.sub(r'\n', ' ', text)  # Replace newlines with spaces
-    text = re.sub(r'\s+', ' ', text)  # Replace multiple spaces with a single space
-
-    # Step 5: Remove leading/trailing spaces
-    text = text.strip()
+    # Fix broken words and lines
+    text = re.sub(r'(\w)-\n(\w)', r'\1\2', text)
+    text = re.sub(r'\n', ' ', text)
+    text = re.sub(r'\s+', ' ', text).strip()
 
     return text
 
-
-def convert_to_json(cleaned_text, output_path):
+def convert_text_to_json(cleaned_text, input_path):
     """
-    Converts preprocessed text into a JSON file, splitting the text into sections or paragraphs.
-    Each paragraph is stored as an individual JSON entry.
+    Converts preprocessed text into a JSON file.
     """
     if cleaned_text is None:
-        print(f"Skipping JSON conversion as text preprocessing failed.")
+        print("Skipping JSON conversion due to preprocessing failure.")
         return
 
-    # Split the text into paragraphs (use '. ' for sentence splitting)
-    paragraphs = cleaned_text.split('. ')  # Split by sentences for structured JSON
-
-    # Structure each paragraph as a JSON object
+    paragraphs = cleaned_text.split('. ')
     json_data = [{"id": i + 1, "content": para.strip()} for i, para in enumerate(paragraphs) if para.strip()]
 
-    # Save to JSON file
+    output_path = os.path.join('/kaggle/working/', os.path.basename(input_path).replace('.txt', '.json'))
+
     try:
         with open(output_path, 'w', encoding='utf-8') as json_file:
             json.dump(json_data, json_file, indent=4, ensure_ascii=False)
@@ -67,25 +54,69 @@ def convert_to_json(cleaned_text, output_path):
     except Exception as e:
         print(f"Error saving JSON file {output_path}: {e}")
 
+def preprocess_csv(file_path):
+    """
+    Preprocess CSV files containing 'Question' and 'Answer' columns.
+    """
+    try:
+        df = pd.read_csv(file_path)
+    except FileNotFoundError:
+        print(f"File not found: {file_path}")
+        return None
+    except Exception as e:
+        print(f"Error reading CSV file {file_path}: {e}")
+        return None
+
+    if 'Question' not in df.columns or 'Answer' not in df.columns:
+        print(f"Invalid CSV format in {file_path}. Expected columns: 'Question', 'Answer'")
+        return None
+
+    df['Question'] = df['Question'].astype(str).apply(lambda x: preprocess_text_content(x))
+    df['Answer'] = df['Answer'].astype(str).apply(lambda x: preprocess_text_content(x))
+
+    json_data = df.to_dict(orient='records')
+    return json_data
+
+def preprocess_text_content(text):
+    """Applies preprocessing to individual text content."""
+    text = re.sub(r'[^A-Za-z0-9.,\s]', '', text)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+def convert_csv_to_json(file_path):
+    """
+    Converts a preprocessed CSV file into JSON format.
+    """
+    json_data = preprocess_csv(file_path)
+    if json_data is None:
+        return
+
+    output_path = os.path.join('/kaggle/working/', os.path.basename(file_path).replace('.csv', '.json'))
+
+    try:
+        with open(output_path, 'w', encoding='utf-8') as json_file:
+            json.dump(json_data, json_file, indent=4, ensure_ascii=False)
+        print(f"CSV converted to JSON and saved at: {output_path}")
+    except Exception as e:
+        print(f"Error saving JSON file {output_path}: {e}")
 
 if __name__ == "__main__":
-    # Example file paths
-    file_paths = [
-        '/content/MayoClinic.txt',
-        '/content/Osteoporosis-MayoClinic.txt',
-        '/content/speakingTree-Jayant.txt',
-        '/content/MayoClinic.txt',
-        '/content/orthopedics.txt',
-        '/content/info.txt'
-
+    text_files = [
+        '/kaggle/input/orthopedics/MayoClinic.txt',
+        '/kaggle/input/orthopedics/OrthopaedicTraumaForMedStudents.txt',
+        '/kaggle/input/orthopedics/Osteoporosis-MayoClinic.txt',
+        '/kaggle/input/orthopedics/info.txt',
+        '/kaggle/input/orthopedics/orthopedics.txt',
+        '/kaggle/input/orthopedics/speakingTree-Jayant.txt'
+    ]
+    csv_files = [
+        '/kaggle/input/orthopedics/orthopedic_qa.csv',
+        '/kaggle/input/orthopedics/orthopedic_case_queries.csv'
     ]
 
-    for file_path in file_paths:
-        # Preprocess the file
-        processed = preprocess_text(file_path)
+    for file_path in text_files:
+        processed_text = preprocess_text(file_path)
+        convert_text_to_json(processed_text, file_path)
 
-        # Create output JSON path
-        json_path = file_path.replace('.txt', '.json')
-
-        # Convert preprocessed text to JSON
-        convert_to_json(processed, json_path)
+    for file_path in csv_files:
+        convert_csv_to_json(file_path)
