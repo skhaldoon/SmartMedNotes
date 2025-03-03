@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { validateEmail } from "email-validator";
-import "./contact.css";
+import "./Contact.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // import { background1, manworking4, contact1, contact2 } from "../assets";
