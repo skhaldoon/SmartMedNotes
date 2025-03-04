@@ -60,7 +60,6 @@ Assisted in frontend debugging and making minor UI adjustments.
 
 Provided feedback on overall system functionality and user experience.
 
-Getting Started
 
 **Installation**
 
