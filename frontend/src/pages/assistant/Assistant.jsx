@@ -9,7 +9,7 @@ function Assistant() {
   const [chatStarted, setChatStarted] = useState(false); // Controls visibility of title
   const [loading, setLoading] = useState(false); // Controls loading state
 
-  const baseURL = "https://97c6-34-34-33-105.ngrok-free.app";
+  const baseURL = "https://smartmednotes.onrender.com";
 
   const handleSend = async () => {
     if (!query.trim() || loading) return; // Prevent sending empty query or multiple requests
