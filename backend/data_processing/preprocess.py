@@ -1,6 +1,39 @@
 import os
 from config import Config
+import os
+import json
+import logging
+import faiss
+import numpy as np
+from sentence_transformers import SentenceTransformer
+from config import Config
 
+def preprocess_text(file_path):
+    """
+    Reads a text file, cleans it, and returns processed text.
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            text = f.read()
+        cleaned_text = text.replace('\n', ' ').strip()
+        return cleaned_text
+    except Exception as e:
+        logging.error(f"Error processing {file_path}: {e}")
+        return None
+
+def preprocess_csv(file_path):
+    """
+    Reads a CSV file and converts it to a JSON-like structure.
+    """
+    import pandas as pd
+    try:
+        df = pd.read_csv(file_path)
+        json_data = df.to_dict(orient='records')
+        return json_data
+    except Exception as e:
+        logging.error(f"Error processing CSV {file_path}: {e}")
+        return None
+        
 def preprocess_all_files():
     """Preprocess all text and CSV files in the data folder."""
     text_files = [
