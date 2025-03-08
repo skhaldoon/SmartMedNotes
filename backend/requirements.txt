@@ -7,3 +7,6 @@ faiss-cpu
 nltk
 pandas
 sentencepiece
+scipy      
+tqdm        
+protobuf    
