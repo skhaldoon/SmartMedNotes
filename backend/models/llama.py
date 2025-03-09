@@ -1,14 +1,17 @@
 import os
-from dotenv import load_dotenv
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import nltk
+from huggingface_hub import login
 
-# Load environment variables from .env file
-load_dotenv()
+# Get the Hugging Face API token from Render's environment
+hf_token = os.environ.get("HUGGINGFACE_TOKEN")
 
-# Get the Hugging Face API token from the environment
-hf_token = os.getenv("HUGGINGFACE_TOKEN")
+if not hf_token:
+    raise ValueError("HUGGINGFACE_TOKEN is not set in the environment variables.")
+
+# Authenticate with Hugging Face
+login(token=hf_token)
 
 # Ensure NLTK is downloaded
 nltk.download("punkt")
@@ -17,13 +20,14 @@ nltk.download("punkt")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model and tokenizer with authentication
-tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B", token=hf_token)
+tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B", use_auth_token=hf_token)
 model = AutoModelForCausalLM.from_pretrained(
     "meta-llama/Llama-3.1-8B",
     torch_dtype=torch.float16,
     device_map="auto",
-    token=hf_token
+    use_auth_token=hf_token
 )
+
 
 def generate_response(context, query, max_new_tokens=200):
     """
