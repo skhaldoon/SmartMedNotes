@@ -13,3 +13,5 @@ protobuf
 python-dotenv
 accelerate
 huggingface_hub
+bitsandbytes
+

@@ -7,7 +7,7 @@ try:
 except ImportError:
     subprocess.run(["pip", "install", "accelerate"], check=True)
 
-from transformers import AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 import torch
 import nltk
 from huggingface_hub import login
@@ -29,10 +29,10 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load model and tokenizer with authentication
 tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-3.1-8B", use_auth_token=hf_token)
+quant_config = BitsAndBytesConfig(load_in_4bit=True)
 model = AutoModelForCausalLM.from_pretrained(
-    "meta-llama/Llama-3.1-8B",
-    torch_dtype=torch.float16,
-    device_map="auto",
+    "meta-llama/Llama-3.1-8B-Instruct",
+    quantization_config=quant_config,
     use_auth_token=hf_token
 )
 
