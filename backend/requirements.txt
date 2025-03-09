@@ -11,4 +11,5 @@ scipy
 tqdm        
 protobuf    
 python-dotenv
-
+accelerate
+huggingface_hub

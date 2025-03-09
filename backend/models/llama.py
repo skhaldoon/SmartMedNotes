@@ -1,14 +1,22 @@
 import os
+import subprocess
+
+# Ensure Accelerate is installed before using device_map="auto"
+try:
+    import accelerate
+except ImportError:
+    subprocess.run(["pip", "install", "accelerate"], check=True)
+
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
 import nltk
 from huggingface_hub import login
 
-# Get the Hugging Face API token from Render's environment
-hf_token = os.environ.get("HUGGINGFACE_TOKEN")
+# Load Hugging Face token from environment
+hf_token = os.getenv("HUGGINGFACE_TOKEN")
 
 if not hf_token:
-    raise ValueError("HUGGINGFACE_TOKEN is not set in the environment variables.")
+    raise ValueError("HUGGINGFACE_TOKEN is missing! Set it in Render's environment variables.")
 
 # Authenticate with Hugging Face
 login(token=hf_token)
@@ -27,6 +35,7 @@ model = AutoModelForCausalLM.from_pretrained(
     device_map="auto",
     use_auth_token=hf_token
 )
+
 
 
 def generate_response(context, query, max_new_tokens=200):
