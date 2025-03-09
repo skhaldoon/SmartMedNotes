@@ -4,6 +4,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig
 from peft import PeftModel
 from huggingface_hub import login
 import nltk
+from config import Config  # Add this import
 
 nltk.download("punkt")
 
