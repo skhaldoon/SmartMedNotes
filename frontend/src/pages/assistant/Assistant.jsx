@@ -9,7 +9,8 @@ function Assistant() {
   const [chatStarted, setChatStarted] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const baseURL = "https://smartmednotes.onrender.com";
+  const baseURL = "https://MAbdullah03-smart-med-notes.hf.space";
+
 
   const handleSend = async () => {
     if (!query.trim() || loading) return;

@@ -1,51 +1,49 @@
+#EMBEDDINGS GENERATION 
 import os
-from config import Config
 import json
 import logging
-import faiss
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
+# ✅ Define paths specific to Kaggle
+PROCESSED_DIR = "/kaggle/working/processed_data"  # Processed data location (read/write allowed)
+MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"  # Embedding model
+
+# ✅ Ensure processed_data directory exists
+os.makedirs(PROCESSED_DIR, exist_ok=True)
+
+# ✅ Setup logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 def generate_embeddings(json_file):
-    """
-    Generate embeddings for a JSON file.
-    """
-    model = SentenceTransformer(Config.MODEL_NAME)
-    try:
-        with open(json_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        texts = [item['content'] for item in data]
-        embeddings = model.encode(texts, convert_to_numpy=True).astype(np.float32)
-        return embeddings
-    except Exception as e:
-        logging.error(f"Error generating embeddings for {json_file}: {e}")
+    """Generate and save embeddings for a JSON file."""
+    if not os.path.exists(json_file):
+        logging.warning(f"Skipping {json_file}: File not found.")
         return None
 
-def save_embeddings(embeddings, json_file):
-    """
-    Save embeddings as a NumPy file.
-    """
-    try:
-        emb_path = json_file.replace('.json', '_embeddings.npy')
-        np.save(emb_path, embeddings)
-        logging.info(f"Saved embeddings: {emb_path}")
-    except Exception as e:
-        logging.error(f"Error saving embeddings: {e}")
+    emb_path = json_file.replace('.json', '_embeddings.npy').replace("/kaggle/input/", "/kaggle/working/")
+    if os.path.exists(emb_path):
+        logging.info(f"Skipping {json_file}: Embeddings already exist.")
+        return None
+
+    logging.info(f"Generating embeddings for {json_file}...")
+    
+    model = SentenceTransformer(MODEL_NAME)
+    with open(json_file, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    texts = [item['content'] for item in data]
+    embeddings = model.encode(texts, convert_to_numpy=True).astype(np.float32)
+
+    np.save(emb_path, embeddings)
+    logging.info(f"Saved embeddings: {emb_path}")
+    return embeddings
 
 def generate_all_embeddings():
     """Generate embeddings for all processed JSON files."""
-    json_files = [
-        os.path.join(Config.PROCESSED_DIR, "MayoClinic.json"),
-        os.path.join(Config.PROCESSED_DIR, "OrthopaedicTraumaForMedStudents.json"),
-        os.path.join(Config.PROCESSED_DIR, "Osteoporosis-MayoClinic.json"),
-        os.path.join(Config.PROCESSED_DIR, "info.json"),
-        os.path.join(Config.PROCESSED_DIR, "orthopedics.json"),
-        os.path.join(Config.PROCESSED_DIR, "speakingTree-Jayant.json"),
-        os.path.join(Config.PROCESSED_DIR, "orthopedic_qa.json"),
-        os.path.join(Config.PROCESSED_DIR, "orthopedic_case_queries.json")
-    ]
+    json_files = [os.path.join(PROCESSED_DIR, f) for f in os.listdir(PROCESSED_DIR) if f.endswith('.json')]
 
     for json_file in json_files:
-        embeddings = generate_embeddings(json_file)
-        if embeddings:
-            save_embeddings(embeddings, json_file)
+        generate_embeddings(json_file)
+
+

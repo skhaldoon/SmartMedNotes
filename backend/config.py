@@ -6,7 +6,12 @@ class Config:
     FAISS_INDEX_PATH = os.path.join(PROCESSED_DIR, "combined_faiss_index.faiss")
     MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
     SUMMARIZATION_MODEL = "t5-small"
-    LLM_MODEL = "microsoft/phi-3-mini-4k-instruct"  # Changed to Phi-3
-    FINE_TUNED_MODEL = "./fine_tuned_phi3"  # Path to save fine-tuned model
 
-    os.makedirs(PROCESSED_DIR, exist_ok=True)
+    # ✅ Update to load the fine-tuned model instead of base Phi-3
+    FINE_TUNED_MODEL = os.path.join(os.path.dirname(__file__), "fine_tuned_phi3")
+    PEFT_CONFIG = {
+        "task_type": "CAUSAL_LM",
+        "inference_mode": True,
+        "layers_pattern": "model.layers",
+        "target_modules": ["q_proj", "v_proj"]  # Match your adapter's training setup
+    }
