@@ -21,7 +21,7 @@ function Assistant() {
     try {
       setConversation((prev) => [...prev, { type: "user", text: query }]);
 
-      const res = await axios.post(`${baseURL}/rag`, { query }, {
+      const res = await axios.post(`${baseURL}`, { query }, {
         headers: { "Content-Type": "application/json" },
       });
 
