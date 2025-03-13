@@ -13,6 +13,15 @@
 - *Deployment:*
   - *Frontend:* Hosted on *Vercel* for seamless accessibility.
   - *Backend:* Deployed on *Hugging Face* for reliable API handling.
+## *Technologies*
+-	*Python & Flask:* Used for backend API development and server-side logic.
+-	*Hugging Face Spaces:* Platform for deploying the backend, including the fine-tuned model and retrieval system.
+-	*FAISS (Facebook AI Similarity Search):* Utilized for efficient vector search and similarity retrieval.
+-	*Microsoft/Phi-3-Mini-4K-Instruct:* Fine-tuned model for generating responses based on orthopedic queries.
+-	*Sentence-Transformers/All-MiniLM-L6-V2:* Used for embedding generation in the retrieval process.
+-	*Google-T5/T5-Small:* Used for summarizer.
+-	*Firebase:* Used for user authentication and database storage.
+
 
 ## *Project Contributions*
 
