@@ -22,7 +22,6 @@
 -	*Google-T5/T5-Small:* Used for summarizer.
 -	*Firebase:* Used for user authentication and database storage.
 
-
 ## *Project Contributions*
 
 ### *Muhammad Abdullah Butt (2021-CS-81)*  🚀
@@ -58,7 +57,7 @@
 
 bash
 # Clone the repository
-git clone https://github.com/your-repo/smartmednotes.git
+git clone https://github.com/MuhammadAbdullahButt/smartmednotes.git
 cd smartmednotes
 
 
@@ -76,3 +75,6 @@ bash
 cd frontend
 npm install
 npm run dev
+
+## *LIVE AT*
+smart-med-notes-git-abdullah-muhammadabdullahbutts-projects.vercel.app
