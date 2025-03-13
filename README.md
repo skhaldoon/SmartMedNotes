@@ -20,7 +20,7 @@
 
 - *Lead Developer & Architect* – Designed and implemented the *backend, model training, deployment, and Git management*.
 - Fine-tuned *microsoft/phi-3-mini-4k-instruct* and optimized *RAG-based retrieval*.
-- Deployed backend on *Hugging Face and Vercel, managed **Firebase database*.
+- Deployed backend on *Hugging Face* and frontend on *Vercel*, managed *Firebase database*.
 - Set up *Git repository* and ensured smooth integration of all components.
 
 ### *Chaudhry Ilyas (2021-CS-60)* 🎨
